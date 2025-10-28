@@ -5,7 +5,6 @@ async function inserir(usuario) {
     if (!usuario || !usuario.nome || !usuario.email || !usuario.senha) {
         throw { id: 400, msg: "Dados do usuário incompletos (nome, email, senha)" };
     }
-    // Fazer depois: validação de email já existente
     return await usuarioRepository.inserir(usuario);
 }
 

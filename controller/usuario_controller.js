@@ -5,7 +5,6 @@ async function inserir(req, res) {
         const usuarioInserido = await usuarioService.inserir(req.body);
         res.status(201).json(usuarioInserido); 
     } catch (err) {
-        // Retorno dos status 
         res.status(err.id || 500).json(err); 
     }
 }

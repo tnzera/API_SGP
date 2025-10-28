@@ -1,7 +1,7 @@
 let listaUsuarios = [];
 let autoIncrement = 1;
 
-//Saldo inicia em 0 e não pode ser alterado 
+//Saldo inicia em 0 
 function inserir(usuario) {
     usuario.id = autoIncrement++;
     usuario.saldo = 0; 
