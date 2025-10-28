@@ -12,7 +12,7 @@ async function inserir(req, res) {
 
 async function listarPorUsuario(req, res) {
     //api/transacoes?usuarioId=1
-    const usuarioId = +req.query.usuarioId; 
+    const usuarioId = +req.params.idUsuario; 
     
     try {
         const lista = await transacaoService.listarPorUsuario(usuarioId);
