@@ -11,7 +11,7 @@ async function inserir(req, res) {
 }
 
 async function listarPorUsuario(req, res) {
-    ///api/categorias?usuarioId=1
+    // /api/categorias?usuarioId=1
     const usuarioId = +req.query.usuarioId; 
     
     try {
@@ -22,7 +22,34 @@ async function listarPorUsuario(req, res) {
     }
 }
 
+async function atualizar(req, res) {
+    const id = +req.params.id; 
+    const categoria = req.body; 
+    
+    try {
+        const categoriaAtualizada = await categoriaService.atualizar(id, categoria);
+        res.json(categoriaAtualizada);
+    } catch (err) {
+        res.status(err.id || 500).json(err);
+    }
+}
+
+async function deletar(req, res) {
+    const id = +req.params.id; 
+    // /api/categorias/2?usuarioId=1
+    const usuarioId = +req.query.usuarioId; 
+    
+    try {
+        const categoriaDeletada = await categoriaService.deletar(id, usuarioId);
+        res.json(categoriaDeletada); // Retorna o item deletado
+    } catch (err) {
+        res.status(err.id || 500).json(err);
+    }
+}
+
 module.exports = {
     inserir,
-    listarPorUsuario
+    listarPorUsuario,
+    atualizar, 
+    deletar
 }

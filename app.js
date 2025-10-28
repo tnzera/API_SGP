@@ -6,7 +6,7 @@ const transacaoRouter = require('./router/transacao_router');
 const app = express();
 const port = 3000;
 
-app.use(express.json()); // Essencial para ler o req.body
+app.use(express.json()); 
 
 // Registra os roteadores
 app.use('/api/usuarios', usuarioRouter);

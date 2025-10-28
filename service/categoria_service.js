@@ -23,7 +23,53 @@ async function listarPorUsuario(usuarioId) {
     return await categoriaRepository.listarPorUsuario(usuarioId);
 }
 
+async function atualizar(id, categoriaUpdate) {
+    // Validação de campos
+    if (!categoriaUpdate || !categoriaUpdate.nome || !categoriaUpdate.usuarioId) {
+        throw { id: 400, msg: "Dados da categoria incompletos (nome, usuarioId)" };
+    }
+    
+    // Verifica categoria existe
+    const categoriaAntiga = await categoriaRepository.buscarPorId(id);
+    if (!categoriaAntiga) {
+        throw { id: 404, msg: "Categoria não encontrada" };
+    }
+    
+    //Validação de segurança
+    if (categoriaAntiga.usuarioId !== categoriaUpdate.usuarioId) {
+        throw { id: 403, msg: "Operação proibida. Você não é o dono desta categoria." };
+    }
+    
+    return await categoriaRepository.atualizar(id, categoriaUpdate);
+}
+
+async function deletar(id, usuarioId) {
+    // Validação de entrada
+    if (!id || !usuarioId) {
+        throw { id: 400, msg: "Dados incompletos (id, usuarioId)" };
+    }
+    
+    // Verifica categoria 
+    const categoria = await categoriaRepository.buscarPorId(id);
+    if (!categoria) {
+        throw { id: 404, msg: "Categoria não encontrada" };
+    }
+    
+    //Validação de segurança 
+    if (categoria.usuarioId !== usuarioId) {
+        throw { id: 403, msg: "Operação proibida. Você não é o dono desta categoria." };
+    }
+
+    const categoriaDeletada = await categoriaRepository.deletar(id);
+    if (!categoriaDeletada) {
+         throw { id: 404, msg: "Categoria não encontrada" }; // Segurança extra
+    }
+    return categoriaDeletada;
+}
+
 module.exports = {
     inserir,
-    listarPorUsuario
+    listarPorUsuario,
+    deletar,
+    atualizar
 }
